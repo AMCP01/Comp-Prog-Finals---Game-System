@@ -78,120 +78,284 @@ int main()
 		monsterHP = 100;
 		monsterName = "Xxr4mc3Lm@51k1pxX";
 		monsterPHY = 50;
-		do {
-			cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
-			cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
-			cout << "It's your turn.\n";
-			cout << "Select action.\n";
-			cout << "1. Attack\n";
-			cout << "2. Use item\n";
-			cout << "3. Do nothing\n";
-			cout << "Enter: ";
-			cin >> actionChoice;
-			do {
-				switch (actionChoice)
+
+		do
+		{
+
+
+			do
+			{
+				cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
+				cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
+				cout << "It's your turn.\n";
+				cout << "Select action.\n";
+				cout << "1. Attack\n";
+				cout << "2. Use item\n";
+				cout << "3. Do nothing\n";
+				cout << "Enter: ";
+				cin >> actionChoice;
+
+				while ('1' == actionChoice && 0 >= energy)
 				{
-				case'1':
-					monsterHP -= phy;
-					cout << "You attacked " << monsterName << "!" << endl;
-					system("pause");
-					cout << monsterName << " lost " << phy << " Health.\n";
-					cout << "Ending turn\n";
-					invalidAction = false;
-					system("pause");
-					break;
-				case '2':
-					cout << "Inventory\n";
-					cout << "1. PotPots - +20HP\n";
-					cout << "2. Return\n";
-					cout << "Enter: ";
-					cin >> itemChoice;
-					do {
-						switch (itemChoice)
-						{
-						case'1':
-							hp += 20;
-							cout << "Used PotPots! Gained 20HP.\n";
-							system("pause");
-							cout << "Ending turn\n";
-							invalidAction = false;
-							system("pause");
-							break;
-						case'2':
-							cout << "Select action.\n";
-							cout << "1. Attack\n";
-							cout << "2. Use item\n";
-							cout << "3. Do nothing\n";
-							cout << "Enter: ";
-							cin >> actionChoice;
-							invalidAction = true;
-							break;
-						default:
-							cout << "Invalid Item\n";
-							cout << "Inventory\n";
-							cout << "1. PotPots - +20HP\n";
-							cout << "2. Return";
-							cout << "Enter: ";
-							cin >> itemChoice;
-							invalidItem = true;
-							break;
-						}
-					} while (invalidItem);
-					break;
-				case'3':
-					cout << "Ending turn\n";
-					invalidAction = false;
-					system("pause");
-					break;
-				default:
-					cout << "Invalid action.";
+					cout << "Not enough Energy to Attack! Please chooise a different action." << endl;
+					cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
+					cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
+					cout << "It's your turn.\n";
 					cout << "Select action.\n";
 					cout << "1. Attack\n";
 					cout << "2. Use item\n";
 					cout << "3. Do nothing\n";
 					cout << "Enter: ";
 					cin >> actionChoice;
-					invalidAction = true;
+				}
+
+				do {
+
+					switch (actionChoice)
+					{
+					case'1':
+						monsterHP -= phy;
+						cout << "You attacked " << monsterName << "!" << endl;
+						system("pause");
+						cout << "You lost 10 energy" << endl;
+						energy -= 10;
+						cout << monsterName << " lost " << phy << " Health.\n";
+						cout << "Ending turn\n";
+						invalidAction = false;
+						system("pause");
+						break;
+					case '2':
+						cout << "Inventory\n";
+						cout << "1. PotPots - +20HP\n";
+						cout << "2. Return\n";
+						cout << "Enter: ";
+						cin >> itemChoice;
+						do {
+							switch (itemChoice)
+							{
+							case'1':
+								hp += 20;
+								cout << "Used PotPots! Gained 20HP.\n";
+								system("pause");
+								cout << "Ending turn\n";
+								invalidAction = false;
+								system("pause");
+								break;
+							case'2':
+								cout << "Select action.\n";
+								cout << "1. Attack\n";
+								cout << "2. Use item\n";
+								cout << "3. Do nothing\n";
+								cout << "Enter: ";
+								cin >> actionChoice;
+								invalidAction = true;
+								break;
+							default:
+								cout << "Invalid Item\n";
+								cout << "Inventory\n";
+								cout << "1. PotPots - +20HP\n";
+								cout << "2. Return";
+								cout << "Enter: ";
+								cin >> itemChoice;
+								invalidItem = true;
+								break;
+							}
+						} while (invalidItem);
+						break;
+					case'3':
+						cout << "Gained 20 Energy" << endl;
+						energy += 20;
+						cout << "Ending turn\n";
+						invalidAction = false;
+						system("pause");
+						break;
+					default:
+						cout << "Invalid action.";
+						cout << "Select action.\n";
+						cout << "1. Attack\n";
+						cout << "2. Use item\n";
+						cout << "3. Do nothing\n";
+						cout << "Enter: ";
+						cin >> actionChoice;
+						invalidAction = true;
+						break;
+					}
+				} while (invalidAction);
+
+				cout << monsterName << " is attacking!\n";
+				system("pause");
+				hp -= monsterPHY;
+				cout << user << " lost " << monsterPHY << "HP!\n";
+				system("pause");
+			} while (0 < monsterHP && 0 < hp);
+
+			if (0 >= monsterHP)
+			{
+				cout << "You have defeated " << monsterName << "!\n";
+				cout << "Proceed to the next level\n";
+			}
+			else if (0 >= hp)
+			{
+				cout << "You were defeated by " << monsterName << "!\n";
+			}
+
+			cout << "Play again? (y/n)";
+			cin >> playAgain;
+			cin.ignore();
+			switch (playAgain)
+			{
+			case'y':
+				restartGame = true;
+				system("pause");
+				system("cls");
+				break;
+			case'n':
+				exit(0);
+				break;
+			default:
+				cout << "Invalid answer. Exiting game";
+				exit(0);
+				break;
+				system("pause");
+				system("cls");
+
+			}
+
+
+			cout << "\nLevel 2\n";
+			monster2HP = 200;
+			monster2Name = "The Guevarras";
+			monster2PHY = 80;
+
+			do {
+				cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
+				cout << "Monster: " << monster2Name << "\tHealth: " << monster2HP << endl;
+				cout << "It's your turn.\n";
+				cout << "Select action.\n";
+				cout << "1. Attack\n";
+				cout << "2. Use item\n";
+				cout << "3. Do nothing\n";
+				cout << "Enter: ";
+				cin >> actionChoice;
+				
+				while ('1' == actionChoice && 0 >= energy)
+				{
+					cout << "Not enough Energy to Attack! Please chooise a different action." << endl;
+					cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
+					cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
+					cout << "It's your turn.\n";
+					cout << "Select action.\n";
+					cout << "1. Attack\n";
+					cout << "2. Use item\n";
+					cout << "3. Do nothing\n";
+					cout << "Enter: ";
+					cin >> actionChoice;
+				}
+				do {
+					switch (actionChoice) {
+					case '1':
+						monster2HP -= phy;
+						cout << "You attacked " << monster2Name << "!" << endl;
+						system("pause");
+						cout << "You lost 10 energy" << endl;
+						energy -= 10;
+						cout << monster2Name << " lost " << phy << " Health.\n";
+						cout << "Ending turn\n";
+						invalidAction = false;
+						system("pause");
+						break;
+					case '2':
+						cout << "Inventory\n";
+						cout << "1. PotPots - +20HP\n";
+						cout << "2. Return\n";
+						cout << "Enter: ";
+						cin >> itemChoice;
+
+						do {
+							switch (itemChoice) {
+							case '1':
+								hp += 20;
+								cout << "Used PotPots! Gained 20HP.\n";
+								system("pause");
+								cout << "Ending turn\n";
+								invalidAction = false;
+								system("pause");
+								break;
+							case '2':
+								cout << "Select action.\n";
+								cout << "1. Attack\n";
+								cout << "2. Use item\n";
+								cout << "3. Do nothing\n";
+								cout << "Enter: ";
+								cin >> actionChoice;
+								invalidAction = true;
+								break;
+							default:
+								cout << "Invalid Item\n";
+								cout << "Inventory\n";
+								cout << "1. PotPots - +20HP\n";
+								cout << "2. Return";
+								cout << "Enter: ";
+								cin >> itemChoice;
+								invalidItem = true;
+								break;
+							}
+						} while (invalidItem);
+						break;
+					case '3':
+						cout << "Gained 20 Energy" << endl;
+						energy += 20;
+						cout << "Ending turn\n";
+						invalidAction = false;
+						system("pause");
+						break;
+					default:
+						cout << "Invalid action.";
+						cout << "Select action.\n";
+						cout << "1. Attack\n";
+						cout << "2. Use item\n";
+						cout << "3. Do nothing\n";
+						cout << "Enter: ";
+						cin >> actionChoice;
+						invalidAction = true;
+						break;
+					}
+				} while (invalidAction);
+
+				cout << monster2Name << " is attacking!\n";
+				system("pause");
+				hp -= monster2PHY;
+				cout << user << " lost " << monster2PHY << "HP!\n";
+				system("pause");
+			} while (0 < monster2HP && 0 < hp);
+
+			if (0 >= monster2HP) {
+				cout << "You have defeated " << monster2Name << "!\n";
+				cout << "Congratulations! You completed the game.\n";
+			}
+			else if (0 >= hp) {
+				cout << "You were defeated by " << monster2Name << "!\n";
+				cout << "Play again? (y/n)";
+				cin >> playAgain;
+				cin.ignore();
+				switch (playAgain) {
+				case 'y':
+					restartGame = true;
+					break;
+				case 'n':
+					exit(0);
+					break;
+				default:
+					cout << "Invalid answer. Exiting game";
+					exit(0);
 					break;
 				}
-			} while (invalidAction);
+			}
 
-			cout << monsterName << " is attacking!\n";
-			system("pause");
-			hp -= monsterPHY;
-			cout << user << " lost " << monsterPHY << "HP!\n";
-			system("pause");
-		} while (0 < monsterHP && 0 < hp);
+		} while (restartGame);
+		system("pause");
+		system("cls");
 
-		if (0 >= monsterHP)
-		{
-			cout << "You have defeated " << monsterName << "!\n";
-			cout << "Proceed to the next level\n";
-		}
-		else if (0 >= hp)
-		{
-			cout << "You were defeated by " << monsterName << "!\n";
-		}
-
-		cout << "Play again? (y/n)";
-		cin >> playAgain;
-		cin.ignore();
-		switch (playAgain)
-		{
-		case'y':
-			restartGame = true;
-			break;
-		case'n':
-			exit(0);
-			break;
-		default:
-			cout << "Invalid answer. Exiting game";
-			exit(0);
-			break;
-		}
+		return 0;
 	} while (restartGame);
-	system("pause");
-	system("cls");
 }
-
-//hellooo
