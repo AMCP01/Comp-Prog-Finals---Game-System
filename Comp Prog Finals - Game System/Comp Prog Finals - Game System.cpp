@@ -11,20 +11,29 @@ int main()
 	*/
 	bool restartGame = false;
 	int hp, mp, phy, energy;
-	int heal = 100;
+	int heal;
 	int numberHeals = 10;
 	string Class[3] = { "Knight", "Sorcerer", "Assassin" };
 	int monsterHP, monsterPHY, monster2HP, monster2PHY;
 	string user, monsterName, monster2Name, ChosenClass;
 	char monsterChoice, actionChoice, buffChoice, fireAgain = false, classChoice, itemChoice, playAgain;
 	bool invalidMonster, invalidAction, invalidClass, invalidItem{}, invalidBuff = false;
+	
+	cout << "Enter your name: ";
+	getline(cin, user);
 	do {
+		heal = 100;
+		int numberHeals = 10;
+		bool gameOver = false;
 		do
 		{
+			heal = 100;
+			int numberHeals = 10;
 			do
 			{
-				cout << "Enter your name: ";
-				getline(cin, user);
+				gameOver = false;
+				restartGame = false;
+
 				cout << "Choose starting class.\n";
 				cout << "1. Knight\n";
 				cout << "   Health  - 500\n";
@@ -199,7 +208,7 @@ int main()
 							system("pause");
 							break;
 						default:
-							cout << "Invalid action.";
+							cout << "Invalid action.\n";
 							cout << "Select action.\n";
 							cout << "1. Attack\n";
 							cout << "2. Use item\n";
@@ -266,6 +275,7 @@ int main()
 					switch (playAgain)
 					{
 					case'y':
+						gameOver = true;
 						restartGame = true;
 						system("pause");
 						system("cls");
@@ -282,7 +292,7 @@ int main()
 
 					}
 				}
-			} while (restartGame);
+			} while (restartGame && gameOver);
 			system("pause");
 			system("cls");
 			cout << "\nLevel 2\n";
@@ -291,6 +301,7 @@ int main()
 			monster2PHY = 80;
 
 			do {
+				monster2PHY = 80;
 				cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 				cout << "Monster: " << monster2Name << "\tHealth: " << monster2HP << endl;
 				cout << "It's your turn.\n";
@@ -302,9 +313,9 @@ int main()
 				cout << "Enter: ";
 				cin >> actionChoice;
 
-				while ('1' == actionChoice && 0 >= energy)
+				while ('1' == actionChoice && 0 >= energy || '1' == actionChoice && 0 >= energy)
 				{
-					cout << "Not enough Energy to Attack! Please choose a different action." << endl;
+					cout << "Not enough Energy to perform action! Please choose a different action." << endl;
 					cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 					cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
 					cout << "It's your turn.\n";
@@ -459,7 +470,7 @@ int main()
 		monster2PHY = 100;
 
 		do {
-			monster2PHY = 80;
+			monster2PHY = 100;
 			cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 			cout << "Monster: " << monster2Name << "\tHealth: " << monster2HP << endl;
 			cout << "It's your turn.\n";
@@ -471,9 +482,9 @@ int main()
 			cout << "Enter: ";
 			cin >> actionChoice;
 
-			while ('1' == actionChoice && 0 >= energy)
+			while ('1' == actionChoice && 0 >= energy || '1' == actionChoice && 0> energy)
 			{
-				cout << "Not enough Energy to Attack! Please choose a different action." << endl;
+				cout << "Not enough Energy to perform action! Please choose a different action." << endl;
 				cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 				cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
 				cout << "It's your turn.\n";
