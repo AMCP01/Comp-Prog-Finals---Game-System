@@ -10,8 +10,9 @@ int main()
 	"Music", "PPE"
 	*/
 	bool restartGame = false;
-	int hp, mp, phy, energy;
+	int hp, mp, phy, energy ;
 	int heal = 50;
+	int numberHeals = 10;
 	string Class[3] = { "Knight", "Sorcerer", "Assassin" };
 	int monsterHP, monsterPHY, monster2HP, monster2PHY;
 	string user, monsterName, monster2Name, ChosenClass;
@@ -85,6 +86,7 @@ int main()
 			monsterPHY = 50;
 				do
 				{
+					monsterPHY = 50;
 					cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 					cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
 					cout << "It's your turn.\n";
@@ -92,12 +94,13 @@ int main()
 					cout << "1. Attack\n";
 					cout << "2. Use item\n";
 					cout << "3. Do nothing\n";
+					cout << "4. Dodge roll & attack\n";
 					cout << "Enter: ";
 					cin >> actionChoice;
 
-					while ('1' == actionChoice && 0 >= energy)
+					while ('1' == actionChoice && 0 >= energy || '4' == actionChoice && 0 >= energy)
 					{
-						cout << "Not enough Energy to Attack! Please chooise a different action." << endl;
+						cout << "Not enough Energy to perform action! Please choose a different action." << endl;
 						cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 						cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
 						cout << "It's your turn.\n";
@@ -105,6 +108,7 @@ int main()
 						cout << "1. Attack\n";
 						cout << "2. Use item\n";
 						cout << "3. Do nothing\n";
+						cout << "4. Dodge roll & attack\n";
 						cout << "Enter: ";
 						cin >> actionChoice;
 					}
@@ -126,16 +130,27 @@ int main()
 							break;
 						case '2':
 							cout << "Inventory\n";
-							cout << "1. PotPots - " << "+" << heal <<" hp\n";
+							cout << "1. PotPots - " << "+" << heal <<" hp" << "(" << numberHeals <<")\n";
 							cout << "2. Return\n";
 							cout << "Enter: ";
 							cin >> itemChoice;
+							while (0 == numberHeals && '1' == itemChoice)
+							{
+								cout << "Not enough Heals! Please choose a different action." << endl;
+								cout << "Inventory\n";
+								cout << "1. PotPots - " << "+" << heal << " hp" << "(" << numberHeals << ")\n";
+								cout << "2. Return\n";
+								cout << "Enter: ";
+								cin >> itemChoice;
+							}
+							
 							do {
 								switch (itemChoice)
 								{
 								case'1':
 									hp += 50;
 									cout << "Used PotPots! Gained " << heal << " hp!\n";
+									numberHeals -= 1;
 									system("pause");
 									cout << "Ending turn\n";
 									invalidAction = false;
@@ -146,6 +161,7 @@ int main()
 									cout << "1. Attack\n";
 									cout << "2. Use item\n";
 									cout << "3. Do nothing\n";
+									cout << "4. Dodge roll\n";
 									cout << "Enter: ";
 									cin >> actionChoice;
 									invalidAction = true;
@@ -169,12 +185,25 @@ int main()
 							invalidAction = false;
 							system("pause");
 							break;
+						case '4':
+							cout << "Performed a dodge roll and immediately attacked!\n";
+							system("pause");
+							cout << "You lost 20 Energy\n";
+							monsterPHY = 0;
+							invalidAction = false;
+							energy -= 20;
+							cout << monsterName << " lost " << phy << " Health.\n";
+							cout << "Ending turn\n";
+							invalidAction = false;
+							system("pause");
+							break;
 						default:
 							cout << "Invalid action.";
 							cout << "Select action.\n";
 							cout << "1. Attack\n";
 							cout << "2. Use item\n";
 							cout << "3. Do nothing\n";
+							cout << "4. Dodge roll\n";
 							cout << "Enter: ";
 							cin >> actionChoice;
 							invalidAction = true;
@@ -195,7 +224,7 @@ int main()
 					do
 					{
 						cout << "You have defeated " << monsterName << "!\n";
-						cout  << "[1] + 40 damage\n[2] +50 Healing\n" << "\nPlease select a buff\n";
+						cout  << "[1] +40 damage\n[2] +50 Healing\n +5 PotPots" << "\nPlease select a buff: \n";
 						cin >> buffChoice;
 
 						switch (buffChoice)
@@ -209,7 +238,9 @@ int main()
 							cout << "You have selected +50 Healing!\n";
 							heal += 50;
 							break;
-
+						case '3':
+							cout << "You have selected +5 PotPots!\n";
+							numberHeals += 5;
 						default:
 							cout << "Invalid choice\n";
 							invalidBuff = true;
@@ -259,12 +290,13 @@ int main()
 				cout << "1. Attack\n";
 				cout << "2. Use item\n";
 				cout << "3. Do nothing\n";
+				cout << "4. Dodge roll\n";
 				cout << "Enter: ";
 				cin >> actionChoice;
 				
 				while ('1' == actionChoice && 0 >= energy)
 				{
-					cout << "Not enough Energy to Attack! Please chooise a different action." << endl;
+					cout << "Not enough Energy to Attack! Please choose a different action." << endl;
 					cout << "\nPlayer: " << "(" << ChosenClass << ")" << user << "\tHealth: " << hp << "\tEnergy: " << energy << endl;
 					cout << "Monster: " << monsterName << "\tHealth: " << monsterHP << endl;
 					cout << "It's your turn.\n";
@@ -290,16 +322,27 @@ int main()
 						break;
 					case '2':
 						cout << "Inventory\n";
-						cout << "1. PotPots - " << "+" << heal << " hp\n";
+						cout << "1. PotPots - " << "+" << heal << " hp" << "(" << numberHeals << ")\n";
 						cout << "2. Return\n";
 						cout << "Enter: ";
 						cin >> itemChoice;
+
+						while (0 == numberHeals && '1' == itemChoice)
+						{
+							cout << "Not enough Heals! Please choose a different action." << endl;
+							cout << "Inventory\n";
+							cout << "1. PotPots - " << "+" << heal << " hp" << "(" << numberHeals << ")\n";
+							cout << "2. Return\n";
+							cout << "Enter: ";
+							cin >> itemChoice;
+						}
 
 						do {
 							switch (itemChoice) {
 							case '1':
 								hp += heal;
 								cout << "Used PotPots! Gained " << heal << " hp\n";
+								numberHeals -= 1;
 								system("pause");
 								cout << "Ending turn\n";
 								invalidAction = false;
@@ -333,6 +376,18 @@ int main()
 						invalidAction = false;
 						system("pause");
 						break;
+					case '4':
+						cout << "Performed a dodge roll and immediately attacked!\n";
+						system("pause");
+						cout << "You lost 20 Energy\n";
+						monsterPHY = 0;
+						invalidAction = false;
+						energy -= 20;
+						cout << monsterName << " lost " << phy << " Health.\n";
+						cout << "Ending turn\n";
+						invalidAction = false;
+						system("pause");
+						break;
 					default:
 						cout << "Invalid action.";
 						cout << "Select action.\n";
@@ -344,6 +399,7 @@ int main()
 						invalidAction = true;
 						break;
 					}
+
 				} while (invalidAction);
 
 				cout << monster2Name << " is attacking!\n";
